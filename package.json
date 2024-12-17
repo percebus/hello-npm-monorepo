@@ -21,7 +21,9 @@
     "sub:package-b:echo": "npm run sub:package-b -- run echo",
     "pretest": "npm run lint",
     "test": "npm run sub:package-a:test && npm run sub:package-b:test",
-    "echo": "npm run sub:package-a:echo && npm run sub:package-b:echo"
+    "echo": "npm run sub:package-a:echo && npm run sub:package-b:echo",
+    "predev": "npm run style",
+    "dev": "npm run sub:package-a:test && npm run sub:package-b:test"
   },
   "author": "JCystems",
   "license": "SEE LICENSE IN LICENSE.md",
