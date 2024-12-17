@@ -1,0 +1,31 @@
+{
+  "name": "hello-npm-monorepo",
+  "version": "0.1.0",
+  "description": "npm monorepo",
+  "workspaces": [
+    "node/*"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier .",
+    "prettier:write": "npm run prettier -- --write",
+    "prettier:check": "npm run prettier -- --check",
+    "lint": "npm run prettier:check",
+    "style": "npm run prettier:write",
+    "poststyle": "npm run lint",
+    "sub:package-a": "npm --prefix ./node/package-a",
+    "sub:package-a:test": "npm run sub:package-a -- test",
+    "sub:package-a:echo": "npm run sub:package-a -- run echo",
+    "sub:package-b": "npm --prefix ./node/package-b",
+    "sub:package-b:test": "npm run sub:package-b -- test",
+    "sub:package-b:echo": "npm run sub:package-b -- run echo",
+    "pretest": "npm run lint",
+    "test": "npm run sub:package-a:test && npm run sub:package-b:test",
+    "echo": "npm run sub:package-a:echo && npm run sub:package-b:echo"
+  },
+  "author": "JCystems",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
