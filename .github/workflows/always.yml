@@ -17,7 +17,7 @@ jobs:
 
     env:
       PROJECT_PATH: ./node/${{ matrix.project }}
-      NPM_CLI_OPTS: --prefix /node/${{ matrix.project }}
+      NPM_CLI_OPTS: --prefix ./node/${{ matrix.project }}
     name: npm test ${{ matrix.project }}
     steps:
       - name: checkout
