@@ -16,7 +16,8 @@ jobs:
           - package-b
 
     env:
-      NPM_CLI_OPTS: --prefix ./node/${{ matrix.project }}
+      PROJECT_PATH: ./node/${{ matrix.project }}
+      NPM_CLI_OPTS: --prefix ${{ env.PROJECT_PATH }}
     name: npm test ${{ matrix.project }}
     steps:
       - name: checkout
@@ -32,7 +33,7 @@ jobs:
       - name: npm install
         run: npm ${{ env.NPM_CLI_OPTS }} ci
       - name: ls node_modules
-        run: ls -la ./node_modules
+        run: ls -la ${{ env.PROJECT_PATH }}/node_modules
 
       - name: npm test
         run: npm test
