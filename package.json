@@ -7,7 +7,11 @@
   ],
   "private": true,
   "scripts": {
-    "setup:ci": "exit 0",
+    "npm:install:global": "npm install --location global yarn",
+    "setup": "npm run npm:install:global",
+    "setup:ci": "npm run setup",
+    "preyarn:ci": "rm -rf ./node_modules",
+    "yarn:ci": "yarn install --frozen-lockfile",
     "prettier": "prettier .",
     "prettier:write": "npm run prettier -- --write",
     "prettier:check": "npm run prettier -- --check",

@@ -64,7 +64,7 @@ jobs:
       - name: setup
         run: yarn run setup:ci
       - name: yarn install
-        run: yarn ci
+        run: yarn run yarn:ci
       - name: ls node_modules
         run: ls -la ./node_modules
 
@@ -114,7 +114,7 @@ jobs:
       - name: setup
         run: yarn run setup:ci
       - name: yarn install
-        run: yarn ci
+        run: yarn run yarn:ci
       - name: ls node_modules
         run: ls -la ./node_modules
 
