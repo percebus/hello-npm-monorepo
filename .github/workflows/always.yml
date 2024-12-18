@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: ls
+        run: ls -la ./node/${{ matrix.project }}
 
       - name: setup node @ ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
