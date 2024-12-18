@@ -15,20 +15,12 @@ jobs:
           - package-a
           - package-b
 
+    env:
+      NPM_CLI_OPTS: --prefix ${{ matrix.project }}
     name: npm test ${{ matrix.project }}
     steps:
-      - name: checkout ${{ matrix.project }}
+      - name: checkout
         uses: actions/checkout@v3
-        with:
-          sparse-checkout: ./node/${{ matrix.project }}/
-          sparse-checkout-cone-mode: false
-      - name: Move mobile app files to root
-        run: |
-          ls -lah
-          shopt -s dotglob
-          mv ./node/${{ matrix.project }}/* .
-          rm -rf ./node
-          ls -lah
 
       - name: setup node @ ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -36,9 +28,9 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: npm run setup:ci --if-present
+        run: npm ${{ env.NPM_CLI_OPTS }} run setup:ci --if-present
       - name: npm install
-        run: npm ci
+        run: npm ${{ env.NPM_CLI_OPTS }} ci
       - name: ls node_modules
         run: ls -la ./node_modules
 
@@ -60,7 +52,7 @@ jobs:
         with:
           sparse-checkout: node/${{ matrix.project }}
           sparse-checkout-cone-mode: false
-      - name: Move mobile app files to root
+      - name: mv
         run: |
           ls -lah
           shopt -s dotglob
