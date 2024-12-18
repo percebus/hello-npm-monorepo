@@ -17,13 +17,18 @@ jobs:
 
     name: npm test ${{ matrix.project }}
     steps:
-      - name: checkout
+      - name: checkout ${{ matrix.project }}
         uses: actions/checkout@v3
         with:
-          sparse-checkout: node/${{ matrix.project }}
+          sparse-checkout: ./node/${{ matrix.project }}/
           sparse-checkout-cone-mode: false
-      - name: ls
-        run: ls -la
+      - name: Move mobile app files to root
+        run: |
+          ls -lah
+          shopt -s dotglob
+          mv ./node/${{ matrix.project }}/* .
+          rm -rf ./node
+          ls -lah
 
       - name: setup node @ ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -50,13 +55,18 @@ jobs:
 
     name: yarn test ${{ matrix.project }}
     steps:
-      - name: checkout
+      - name: checkout ${{ matrix.project }}
         uses: actions/checkout@v3
         with:
           sparse-checkout: node/${{ matrix.project }}
           sparse-checkout-cone-mode: false
-      - name: ls
-        run: ls -la
+      - name: Move mobile app files to root
+        run: |
+          ls -lah
+          shopt -s dotglob
+          mv ./node/${{ matrix.project }}/* .
+          rm -rf ./node
+          ls -lah
 
       - name: setup node @ ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
