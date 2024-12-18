@@ -1,0 +1,122 @@
+name: Verify
+on:
+  push:
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  npm_test_projects:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 6
+      matrix:
+        project:
+          - package-a
+          - package-b
+
+    name: npm test ${{ matrix.project }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+
+      - name: setup node @ ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: cd ${{ matrix.project }}
+        run: cd ${{ matrix.project }}
+      - name: setup
+        run: npm run setup:ci --if-present
+      - name: npm install
+        run: npm ci
+      - name: ls node_modules
+        run: ls -la ./node_modules
+
+      - name: npm test
+        run: npm test
+
+  yarn_test_projects:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 6
+      matrix:
+        project:
+          - package-c
+
+    name: yarn test ${{ matrix.project }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+
+      - name: setup node @ ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: cd ${{ matrix.project }}
+        run: cd ${{ matrix.project }}
+      - name: setup
+        run: yarn run setup:ci --if-present
+      - name: yarn install
+        run: yarn ci
+      - name: ls node_modules
+        run: ls -la ./node_modules
+
+      - name: yarn test
+        run: yarn test
+
+  npm_test:
+    name: npm test
+    runs-on: ubuntu-latest
+    needs: npm_test_projects
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+
+      - name: setup node @ ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: setup
+        run: npm run setup:ci --if-present
+      - name: npm install
+        run: npm ci
+      - name: ls node_modules
+        run: ls -la ./node_modules
+
+      - name: npm test
+        run: npm test
+
+  yarn_test:
+    name: yarn test
+    runs-on: ubuntu-latest
+    needs: yarn_test_projects
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+
+      - name: setup node @ ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: setup
+        run: yarn run setup:ci --if-present
+      - name: yarn install
+        run: yarn ci
+      - name: ls node_modules
+        run: ls -la ./node_modules
+
+      - name: yarn test
+        run: yarn test

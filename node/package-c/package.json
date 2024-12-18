@@ -1,0 +1,17 @@
+{
+  "name": "package-c",
+  "version": "0.1.0",
+  "description": "Some yarn package",
+  "main": "index.js",
+  "author": "JCystems",
+  "license": "SEE LICENSE IN ../../LICENSE.md",
+  "private": true,
+  "scripts": {
+    "echo": "echo 'package C'",
+    "pretest": "npm run echo",
+    "test": "exit 0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

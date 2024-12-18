@@ -5,7 +5,7 @@
   "workspaces": [
     "node/*"
   ],
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "prettier": "prettier .",
     "prettier:write": "npm run prettier -- --write",
@@ -19,11 +19,14 @@
     "sub:package-b": "npm --prefix ./node/package-b",
     "sub:package-b:test": "npm run sub:package-b -- test",
     "sub:package-b:echo": "npm run sub:package-b -- run echo",
+    "sub:package-c": "npm --prefix ./node/package-c",
+    "sub:package-c:test": "npm run sub:package-c -- test",
+    "sub:package-c:echo": "npm run sub:package-c -- run echo",
     "pretest": "npm run lint",
-    "test": "npm run sub:package-a:test && npm run sub:package-b:test",
-    "echo": "npm run sub:package-a:echo && npm run sub:package-b:echo",
+    "test": "npm run sub:package-a:test && npm run sub:package-b:test && npm run sub:package-c:test",
+    "echo": "npm run sub:package-a:echo && npm run sub:package-b:echo && npm run sub:package-c:echo",
     "predev": "npm run style",
-    "dev": "npm run sub:package-a:test && npm run sub:package-b:test"
+    "dev": "npm run sub:package-a:test && npm run sub:package-b:test && npm run sub:package-c:test"
   },
   "author": "JCystems",
   "license": "SEE LICENSE IN LICENSE.md",
