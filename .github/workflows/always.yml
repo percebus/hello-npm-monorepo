@@ -16,7 +16,7 @@ jobs:
           - package-b
 
     env:
-      NPM_CLI_OPTS: --prefix ${{ matrix.project }}
+      NPM_CLI_OPTS: --prefix ./node/${{ matrix.project }}
     name: npm test ${{ matrix.project }}
     steps:
       - name: checkout
