@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        with:
+          sparse-checkout: node/${{ matrix.project }}
+          sparse-checkout-cone-mode: false
       - name: ls
         run: ls -la
 
@@ -27,8 +30,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: cd ${{ matrix.project }}
-        run: cd ./node/${{ matrix.project }}
       - name: setup
         run: npm run setup:ci --if-present
       - name: npm install
@@ -51,6 +52,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        with:
+          sparse-checkout: node/${{ matrix.project }}
+          sparse-checkout-cone-mode: false
       - name: ls
         run: ls -la
 
@@ -59,8 +63,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: cd ${{ matrix.project }}
-        run: cd ./node/${{ matrix.project }}
       - name: setup
         run: yarn run setup:ci
       - name: yarn install
