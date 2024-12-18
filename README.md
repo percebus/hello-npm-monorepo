@@ -1,5 +1,7 @@
 # hello-npm-monorepo
 
+[![Verify](https://github.com/percebus/hello-npm-monorepo/actions/workflows/always.yml/badge.svg)](https://github.com/percebus/hello-npm-monorepo/actions/workflows/always.yml)
+
 [`HISTORY`](HISTORY.md) | [`TODO`s](TODO.md) | [`LICENSE`](LICENSE)
 
 npm, multiple projects

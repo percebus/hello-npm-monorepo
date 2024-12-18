@@ -62,7 +62,7 @@ jobs:
       - name: cd ${{ matrix.project }}
         run: cd ./node/${{ matrix.project }}
       - name: setup
-        run: yarn run setup:ci --if-present
+        run: yarn run setup:ci
       - name: yarn install
         run: yarn ci
       - name: ls node_modules
@@ -112,7 +112,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: yarn run setup:ci --if-present
+        run: yarn run setup:ci
       - name: yarn install
         run: yarn ci
       - name: ls node_modules

@@ -7,6 +7,7 @@
   "license": "SEE LICENSE IN ../../LICENSE.md",
   "private": true,
   "scripts": {
+    "setup:ci": "exit 0",
     "echo": "echo 'package C'",
     "pretest": "npm run echo",
     "test": "exit 0"
