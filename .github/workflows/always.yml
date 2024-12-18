@@ -31,14 +31,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: npm ${{ env.NPM_CLI_OPTS }} run setup:ci --if-present
+        run: npm run setup:ci --if-present ${{ env.NPM_CLI_OPTS }}
       - name: npm install
-        run: npm ${{ env.NPM_CLI_OPTS }} ci
+        run: npm ci ${{ env.NPM_CLI_OPTS }}
       - name: ls node_modules
         run: ls -la ${{ env.PROJECT_PATH }}/node_modules
 
       - name: npm test
-        run: npm test
+        run: npm test ${{ env.NPM_CLI_OPTS }}
 
   yarn_test_projects:
     runs-on: ubuntu-latest
