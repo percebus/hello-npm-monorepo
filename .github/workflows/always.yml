@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: cd ${{ matrix.project }}
-        run: cd ${{ matrix.project }}
+        run: cd ./node/${{ matrix.project }}
       - name: setup
         run: npm run setup:ci --if-present
       - name: npm install
@@ -60,7 +60,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: cd ${{ matrix.project }}
-        run: cd ${{ matrix.project }}
+        run: cd ./node/${{ matrix.project }}
       - name: setup
         run: yarn run setup:ci --if-present
       - name: yarn install
