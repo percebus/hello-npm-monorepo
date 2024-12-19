@@ -16,7 +16,7 @@ jobs:
           - package-b
 
     env:
-      PROJECT_PATH: ./node/${{ matrix.project }}
+      WORKSPACE: ./node/${{ matrix.project }}
       NPM_CLI_OPTS: --prefix ./node/${{ matrix.project }}
     name: npm test ${{ matrix.project }}
     steps:
@@ -35,13 +35,16 @@ jobs:
       - name: npm install
         run: npm ci ${{ env.NPM_CLI_OPTS }}
       - name: ls node_modules
-        run: ls -la ${{ env.PROJECT_PATH }}/node_modules
+        run: ls -la ${{ env.WORKSPACE }}/node_modules
 
       - name: npm test
         run: npm test ${{ env.NPM_CLI_OPTS }}
 
   yarn_test_projects:
     runs-on: ubuntu-latest
+    env:
+      WORKSPACE: ./node/package-c
+      YARN_CLI_OPTS: --cwd ./node/package-c
     strategy:
       max-parallel: 6
       matrix:
@@ -52,16 +55,6 @@ jobs:
     steps:
       - name: checkout ${{ matrix.project }}
         uses: actions/checkout@v3
-        with:
-          sparse-checkout: node/${{ matrix.project }}
-          sparse-checkout-cone-mode: false
-      - name: mv
-        run: |
-          ls -lah
-          shopt -s dotglob
-          mv ./node/${{ matrix.project }}/* .
-          rm -rf ./node
-          ls -lah
 
       - name: setup node @ ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -69,14 +62,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: yarn run setup:ci
+        run: yarn run setup:ci ${YARN_CLI_OPTS}
       - name: yarn install
-        run: yarn run yarn:ci
+        run: yarn run yarn:ci ${YARN_CLI_OPTS}
       - name: ls node_modules
         run: ls -la ./node_modules
 
       - name: yarn test
-        run: yarn test
+        run: yarn test ${YARN_CLI_OPTS}
 
   npm_test:
     name: npm test
