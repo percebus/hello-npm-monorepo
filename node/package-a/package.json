@@ -12,8 +12,5 @@
   "license": "SEE LICENSE IN ../../LICENSE.md",
   "devDependencies": {
     "gulp": "^5.0.0"
-  },
-  "dependencies": {
-    "hello-npm-monorepo": "file:../.."
   }
 }

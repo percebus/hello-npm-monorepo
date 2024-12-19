@@ -11,7 +11,6 @@
   "author": "JCystems",
   "license": "SEE LICENSE IN ../../LICENSE.md",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "hello-npm-monorepo": "file:../.."
+    "lodash": "^4.17.21"
   }
 }
