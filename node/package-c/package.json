@@ -8,6 +8,9 @@
   "private": true,
   "scripts": {
     "setup:ci": "exit 0",
+    "rm:node_modules": "rm -rf ./node_modules",
+    "preyarn:ci": "npm run rm:node_modules",
+    "yarn:ci": "yarn install --frozen-lockfile",
     "echo": "echo 'package C'",
     "pretest": "npm run echo",
     "test": "exit 0"
