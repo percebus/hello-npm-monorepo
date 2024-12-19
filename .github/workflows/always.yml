@@ -62,14 +62,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: yarn run setup:ci ${{ env.YARN_CLI_OPTS }}
+        run: yarn ${{ env.YARN_CLI_OPTS }} run setup:ci
       - name: yarn install
-        run: yarn run yarn:ci ${{ env.YARN_CLI_OPTS }}
+        run: yarn ${{ env.YARN_CLI_OPTS }} run yarn:ci
       - name: ls node_modules
         run: ls -la ./node_modules
 
       - name: yarn test
-        run: yarn test ${{ env.YARN_CLI_OPTS }}
+        run: yarn ${{ env.YARN_CLI_OPTS }} test
 
   npm_test:
     name: npm test
