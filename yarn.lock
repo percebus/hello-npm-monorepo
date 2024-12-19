@@ -2044,18 +2044,6 @@ p-try@^2.0.0:
   resolved "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-"package-b@file:C:\\Users\\jcguerrero\\Projects\\github\\percebus\\hello-npm-monorepo\\node\\package-b":
-  version "0.1.0"
-  resolved "file:node/package-b"
-  dependencies:
-    lodash "^4.17.21"
-
-"package-c@file:C:\\Users\\jcguerrero\\Projects\\github\\percebus\\hello-npm-monorepo\\node\\package-c":
-  version "0.1.0"
-  resolved "file:node/package-c"
-  dependencies:
-    express "^4.21.2"
-
 parse-json@^5.2.0:
   version "5.2.0"
   resolved "https://registry.npmjs.org/parse-json/-/parse-json-5.2.0.tgz"

@@ -1,14 +1,15 @@
 FROM node:22 AS base
 
-FROM base as root
+FROM base AS root
 WORKDIR /usr/project
 COPY . .
+RUN ls -la
 RUN npm run setup:ci --if-present && npm ci
 
-FROM root as linted
+FROM root AS linted
 RUN npm run lint
 
-FROM base as express-app
+FROM base AS express-app
 WORKDIR /usr/project
 COPY ./node/express-app .
 RUN npm run setup:ci --if-present && npm ci
