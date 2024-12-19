@@ -11,7 +11,7 @@
     "setup": "npm run npm:install:global",
     "setup:ci": "npm run setup",
     "rm:node_modules": "rm -rf ./node_modules",
-    "preyarn:ci": "npm run rm:node_modules",
+    "preyarn:ci": "yarn run rm:node_modules",
     "yarn:ci": "yarn install --frozen-lockfile",
     "prettier": "prettier .",
     "prettier:write": "npm run prettier -- --write",
