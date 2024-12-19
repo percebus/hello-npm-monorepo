@@ -40,6 +40,7 @@ jobs:
       - name: npm test
         run: npm test ${{ env.NPM_CLI_OPTS }}
 
+  # FIXME REMOVE cd cmds
   yarn_test_projects:
     runs-on: ubuntu-latest
     env:
@@ -62,14 +63,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: setup
-        run: yarn run setup:ci ${YARN_CLI_OPTS}
+        run: |
+          cd ${WORKSPACE}
+          yarn run setup:ci
       - name: yarn install
-        run: yarn run yarn:ci ${YARN_CLI_OPTS}
+        run: |
+          cd ${WORKSPACE}
+          yarn run yarn:ci
       - name: ls node_modules
-        run: ls -la ./node_modules
+        run: ls -la ${WORKSPACE}/node_modules
 
       - name: yarn test
-        run: yarn test ${YARN_CLI_OPTS}
+        run: |
+          cd ${WORKSPACE}
+          yarn test
 
   npm_test:
     name: npm test
