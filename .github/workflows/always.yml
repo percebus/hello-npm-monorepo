@@ -12,7 +12,7 @@ jobs:
       max-parallel: 6
       matrix:
         project:
-          - express-a
+          - express-app
           - package-b
 
     env:
@@ -129,7 +129,7 @@ jobs:
       max-parallel: 10
       matrix:
         DOCKER_TARGET:
-          - express-app
+          - express-apppp
           # TODO add each package
 
     runs-on: ubuntu-latest
