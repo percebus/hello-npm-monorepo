@@ -120,3 +120,37 @@ jobs:
 
       - name: yarn test
         run: yarn test
+
+  docker_build_matrix:
+    name: docker build --target
+    needs: npm_test
+    continue-on-error: true
+    strategy:
+      max-parallel: 10
+      matrix:
+        DOCKER_TARGET:
+          - express-app
+          # TODO add each package
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
+        run: |
+          docker build . \
+            --target ${{ matrix.DOCKER_TARGET }} \
+            --tag ${{ env.REPOSITORY_NAME }}.${{ matrix.DOCKER_TARGET }}:${{ env.DOCKER_TAG_VERSION }}
+
+  docker_compose:
+    name: docker compose
+    if: github.ref == 'refs/heads/main'
+    needs: docker_build_matrix
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: docker compose build
+        run: docker compose build
