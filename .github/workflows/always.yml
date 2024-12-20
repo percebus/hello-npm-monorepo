@@ -129,7 +129,7 @@ jobs:
       max-parallel: 10
       matrix:
         DOCKER_TARGET:
-          - express-apppp
+          - express-app
           # TODO add each package
 
     runs-on: ubuntu-latest
