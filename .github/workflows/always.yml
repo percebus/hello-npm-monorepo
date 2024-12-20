@@ -8,7 +8,6 @@ env:
   DOCKER_BUILDKIT: 1
   DOCKER_TAG_VERSION: latest
 
-
 jobs:
   npm_test_projects:
     runs-on: ubuntu-latest
