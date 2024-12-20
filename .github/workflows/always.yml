@@ -154,7 +154,7 @@ jobs:
 
   docker_compose:
     name: docker compose
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main' # TODO
     needs: docker_build_matrix
     runs-on: ubuntu-latest
     steps:
