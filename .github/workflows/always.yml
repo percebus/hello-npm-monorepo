@@ -5,6 +5,11 @@ on:
 env:
   NODE_VERSION: 22
 
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+
+  DOCKER_BUILDKIT: 1
+  DOCKER_TAG_VERSION: latest
+
 jobs:
   npm_test_projects:
     runs-on: ubuntu-latest
@@ -12,7 +17,7 @@ jobs:
       max-parallel: 6
       matrix:
         project:
-          - package-a
+          - express-app
           - package-b
 
     env:
@@ -74,7 +79,9 @@ jobs:
   npm_test:
     name: npm test
     runs-on: ubuntu-latest
-    needs: npm_test_projects
+    needs:
+      - npm_test_projects
+      - yarn_test_projects
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -99,7 +106,9 @@ jobs:
   yarn_test:
     name: yarn test
     runs-on: ubuntu-latest
-    needs: yarn_test_projects
+    needs:
+      - npm_test_projects
+      - yarn_test_projects
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -120,3 +129,37 @@ jobs:
 
       - name: yarn test
         run: yarn test
+
+  docker_build_matrix:
+    name: docker build --target
+    needs: npm_test
+    continue-on-error: true
+    strategy:
+      max-parallel: 10
+      matrix:
+        DOCKER_TARGET:
+          - express-app
+          # TODO add each package
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
+        run: |
+          docker build . \
+            --target ${{ matrix.DOCKER_TARGET }} \
+            --tag ${{ env.REPOSITORY_NAME }}.${{ matrix.DOCKER_TARGET }}:${{ env.DOCKER_TAG_VERSION }}
+
+  docker_compose:
+    name: docker compose
+    if: github.ref == 'refs/heads/main'
+    needs: docker_build_matrix
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: docker compose build
+        run: docker compose build
