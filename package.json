@@ -30,10 +30,10 @@
     "sub:package-c:test": "npm run sub:package-c -- test",
     "sub:package-c:echo": "npm run sub:package-c -- run echo",
     "pretest": "npm run lint",
-    "test": "npm run sub:express-app:test && npm run sub:rest-app:test && npm run sub:package-c:test",
-    "echo": "npm run sub:express-app:echo && npm run sub:rest-app:echo && npm run sub:package-c:echo",
+    "test": "bash scripts/node/packages/task.ba.sh test",
+    "echo": "bash scripts/node/packages/task.ba.sh echo",
     "predev": "npm run style",
-    "dev": "npm run sub:express-app:test && npm run sub:rest-app:test && npm run sub:package-c:test",
+    "dev": "bash scripts/node/packages/task.ba.sh test",
     "docker:compose:up": "docker compose up --build"
   },
   "author": "JCystems",
