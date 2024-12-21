@@ -12,8 +12,8 @@
     "poststyle": "npm run lint",
     "pretest": "npm run echo && npm run lint",
     "test": "exit 0",
-    "json-server:blog": "npm run json-server ./db/blog.json5",
-    "start": "npm run json:server:blog"
+    "json-server:blog": "json-server ./db/blog.json5",
+    "start": "npm run json-server:blog"
   },
   "author": "JCystems",
   "license": "SEE LICENSE IN ../../LICENSE.md",

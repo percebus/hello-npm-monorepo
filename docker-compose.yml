@@ -1,5 +1,14 @@
 services:
   express-app:
-    build: .
+    build:
+      context: .
+      target: express-app
     ports:
       - 8080:3000
+
+  rest-app:
+    build:
+      context: .
+      target: rest-app
+    ports:
+      - 8081:3000

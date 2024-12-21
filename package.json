@@ -16,7 +16,8 @@
     "prettier": "prettier .",
     "prettier:write": "npm run prettier -- --write",
     "prettier:check": "npm run prettier -- --check",
-    "lint": "npm run prettier:check",
+    "dockerlint": "dockerlint Dockerfile",
+    "lint": "npm run prettier:check && npm run dockerlint",
     "style": "npm run prettier:write",
     "poststyle": "npm run lint",
     "sub:express-app": "npm --prefix ./node/express-app",
@@ -32,11 +33,13 @@
     "test": "npm run sub:express-app:test && npm run sub:package-b:test && npm run sub:package-c:test",
     "echo": "npm run sub:express-app:echo && npm run sub:package-b:echo && npm run sub:package-c:echo",
     "predev": "npm run style",
-    "dev": "npm run sub:express-app:test && npm run sub:package-b:test && npm run sub:package-c:test"
+    "dev": "npm run sub:express-app:test && npm run sub:package-b:test && npm run sub:package-c:test",
+    "docker:compose:up": "docker compose up --build"
   },
   "author": "JCystems",
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
+    "dockerlint": "^0.3.9",
     "prettier": "^3.4.2"
   }
 }
