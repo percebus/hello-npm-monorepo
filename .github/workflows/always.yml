@@ -132,7 +132,7 @@ jobs:
 
   docker_compose:
     name: docker compose
-    needs: docker_build_matrix
+    needs: npm_test
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -144,7 +144,7 @@ jobs:
   docker_build_matrix:
     name: docker build --target
     # if: github.ref == 'refs/heads/main' # TODO
-    needs: npm_test
+    needs: docker_compose
     continue-on-error: true
     strategy:
       max-parallel: 10

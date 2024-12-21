@@ -7,9 +7,10 @@
   ],
   "private": true,
   "scripts": {
-    "npm:install:global": "npm install --location global yarn",
-    "setup": "npm run npm:install:global",
+    "npm:install:global:all": "npm install --location global yarn",
+    "setup": "npm run npm:install:global:all",
     "setup:ci": "npm run setup",
+    "setup:docker": "exit 0",
     "rm:node_modules": "rm -rf ./node_modules",
     "preyarn:ci": "yarn run rm:node_modules",
     "yarn:ci": "yarn install --frozen-lockfile",
