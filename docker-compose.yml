@@ -3,6 +3,7 @@ services:
     build:
       context: .
       target: express-app
+    command: start
     ports:
       - 8080:3000
 
@@ -10,5 +11,6 @@ services:
     build:
       context: .
       target: rest-app
+    command: start
     ports:
       - 8081:3000

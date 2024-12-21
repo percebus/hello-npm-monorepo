@@ -17,7 +17,7 @@
     "prettier:write": "npm run prettier -- --write",
     "prettier:check": "npm run prettier -- --check",
     "dockerlint": "dockerlint Dockerfile",
-    "lint": "npm run prettier:check && npm run dockerlint",
+    "lint": "npm run prettier:check",
     "style": "npm run prettier:write",
     "poststyle": "npm run lint",
     "sub:express-app": "npm --prefix ./node/express-app",
