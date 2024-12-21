@@ -18,7 +18,7 @@ jobs:
       matrix:
         project:
           - express-app
-          - package-b
+          - rest-app
 
     env:
       WORKSPACE: ./node/${{ matrix.project }}
