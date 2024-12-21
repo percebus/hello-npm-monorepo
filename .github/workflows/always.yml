@@ -143,7 +143,7 @@ jobs:
 
   docker_build_matrix:
     name: docker build --target
-    # if: github.ref == 'refs/heads/main' # TODO
+    if: github.ref == 'refs/heads/main'
     needs: docker_compose
     continue-on-error: true
     strategy:
@@ -151,6 +151,8 @@ jobs:
       matrix:
         DOCKER_TARGET:
           - root
+          #
+          # These are tested by docker compose
           - express-app
           - rest-app
           # TODO add each package
