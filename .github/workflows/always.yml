@@ -85,7 +85,7 @@ jobs:
     with:
       # TODO: Get node/express-app/junit.xml
       # So node/*/junit.xml ?
-      files_pattern: ''
+      files_pattern: ""
 
   yarn_test:
     name: yarn test
