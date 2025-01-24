@@ -31,7 +31,7 @@ jobs:
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
-      files_pattern: ./node/*/junit.xml
+      files_pattern: ./node/${{ matrix.project }}/junit.xml
 
   yarn_test_projects:
     runs-on: ubuntu-latest
