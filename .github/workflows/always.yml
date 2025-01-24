@@ -78,6 +78,7 @@ jobs:
         run: yarn ${{ env.YARN_CLI_OPTS }} test
 
   npm_test:
+    name: npm test
     runs-on: ubuntu-latest
     needs:
       - npm_test_projects
