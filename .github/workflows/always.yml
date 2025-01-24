@@ -23,6 +23,7 @@ jobs:
   npm_test_projects:
     strategy:
       max-parallel: 6
+      fail-fast: false
       matrix:
         project:
           - express-app
@@ -31,7 +32,8 @@ jobs:
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
-      files_pattern: ./node/${{ matrix.project }}/junit.xml
+      # Not all projects have `jest-junit`
+      reporter: ''
 
   yarn_test_projects:
     runs-on: ubuntu-latest
@@ -40,6 +42,7 @@ jobs:
       YARN_CLI_OPTS: --cwd ./node/package-c
     strategy:
       max-parallel: 6
+      fail-fast: false
       matrix:
         project:
           - package-c
