@@ -9,6 +9,16 @@ env:
   DOCKER_BUILDKIT: 1
   DOCKER_TAG_VERSION: latest
 
+# SEE: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+# "Invalid workflow file: .github/workflows/always.yml#L70
+# The workflow is requesting 'actions: read, checks: write, pull-requests: write',
+# but is only allowed 'actions: none, checks: none, pull-requests: none'.""
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
 jobs:
   npm_test_projects:
     runs-on: ubuntu-latest
