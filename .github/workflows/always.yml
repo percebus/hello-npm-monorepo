@@ -82,6 +82,8 @@ jobs:
       - npm_test_projects
       - yarn_test_projects
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+    with:
+      files_pattern: node/*/junit.xml
 
   yarn_test:
     name: yarn test
