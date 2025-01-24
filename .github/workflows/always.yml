@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
       - uses: percebus/github-actions-node/.github/actions/node_setup@main
-      - uses: percebus/github-actions-node/.github/actions/npm_install@main
+      - uses: percebus/github-actions-npm/.github/actions/npm_install@main
         with:
           working-directory: ${{ env.WORKSPACE }}
 
