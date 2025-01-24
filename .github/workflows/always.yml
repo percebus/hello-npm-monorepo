@@ -34,6 +34,7 @@ jobs:
       working-directory: ./node/${{ matrix.project }}
       # Not all projects have `jest-junit`
       reporter: ''
+      files_pattern: ''
 
   yarn_test_projects:
     runs-on: ubuntu-latest
