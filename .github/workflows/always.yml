@@ -83,7 +83,9 @@ jobs:
       - yarn_test_projects
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
     with:
-      files_pattern: node/*/junit.xml
+      # TODO: Get node/express-app/junit.xml
+      # So node/*/junit.xml ?
+      files_pattern: ''
 
   yarn_test:
     name: yarn test
