@@ -89,6 +89,7 @@ jobs:
       - yarn_test_projects
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
     with:
+      reporter: jest-junit
       files_pattern: ./node/*/junit.xml
 
   yarn_test:
