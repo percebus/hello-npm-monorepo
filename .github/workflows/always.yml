@@ -78,14 +78,17 @@ jobs:
         run: yarn ${{ env.YARN_CLI_OPTS }} test
 
   npm_test:
+    runs-on: ubuntu-latest
     needs:
       - npm_test_projects
       - yarn_test_projects
-    uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
-    with:
-      # TODO: Get node/express-app/junit.xml
-      # So node/*/junit.xml ?
-      files_pattern: ""
+    steps:
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/node_setup@main
+      - uses: percebus/github-actions-npm/.github/actions/npm_install@main
+
+      - name: npm test
+        run: npm test
 
   yarn_test:
     name: yarn test
