@@ -1,14 +1,23 @@
-name: Verify
+name: "[C]ontinuous [I]ntegration"
 on:
   push:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 env:
-  NODE_VERSION: 22
-
   REPOSITORY_NAME: ${{ github.event.repository.name }}
 
   DOCKER_BUILDKIT: 1
   DOCKER_TAG_VERSION: latest
+
+# SEE: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+# "Invalid workflow file: .github/workflows/always.yml#L70
+# The workflow is requesting 'actions: read, checks: write, pull-requests: write',
+# but is only allowed 'actions: none, checks: none, pull-requests: none'.""
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
 
 jobs:
   npm_test_projects:
@@ -22,28 +31,20 @@ jobs:
 
     env:
       WORKSPACE: ./node/${{ matrix.project }}
-      NPM_CLI_OPTS: --prefix ./node/${{ matrix.project }}
     name: npm test ${{ matrix.project }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/node_setup@main
+
       - name: ls
-        run: ls -la ./node/${{ matrix.project }}
-
-      - name: setup node @ ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        run: ls -la ${{ env.WORKSPACE }}
+      - uses: percebus/github-actions-npm/.github/actions/npm_install@main
         with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: setup
-        run: npm run setup:ci --if-present ${{ env.NPM_CLI_OPTS }}
-      - name: npm install
-        run: npm ci ${{ env.NPM_CLI_OPTS }}
-      - name: ls node_modules
-        run: ls -la ${{ env.WORKSPACE }}/node_modules
+          working-directory: ${{ env.WORKSPACE }}
 
       - name: npm test
-        run: npm test ${{ env.NPM_CLI_OPTS }}
+        working-directory: ${{ env.WORKSPACE }}
+        run: npm test
 
   yarn_test_projects:
     runs-on: ubuntu-latest
@@ -58,20 +59,20 @@ jobs:
 
     name: yarn test ${{ matrix.project }}
     steps:
-      - name: checkout ${{ matrix.project }}
-        uses: actions/checkout@v3
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/node_setup@main
 
-      - name: setup node @ ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+      - name: ls
+        run: ls -la ${{ env.WORKSPACE }}
 
       - name: setup
         run: yarn ${{ env.YARN_CLI_OPTS }} run setup:ci
       - name: yarn install
-        run: yarn ${{ env.YARN_CLI_OPTS }} run yarn:ci
-      - name: ls node_modules
-        run: ls -la ./node_modules
+        run: yarn ${{ env.YARN_CLI_OPTS }} run clean-install
+
+      # TODO? or XXX? Not generating node_modules
+      # - name: ls node_modules
+      #   run: ls -la ${{ env.WORKSPACE }}/node_modules
 
       - name: yarn test
         run: yarn ${{ env.YARN_CLI_OPTS }} test
@@ -83,22 +84,9 @@ jobs:
       - npm_test_projects
       - yarn_test_projects
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: ls
-        run: ls -la
-
-      - name: setup node @ ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: setup
-        run: npm run setup:ci --if-present
-      - name: npm install
-        run: npm ci
-      - name: ls node_modules
-        run: ls -la ./node_modules
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/node_setup@main
+      - uses: percebus/github-actions-npm/.github/actions/npm_install@main
 
       - name: npm test
         run: npm test
@@ -110,15 +98,8 @@ jobs:
       - npm_test_projects
       - yarn_test_projects
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: ls
-        run: ls -la
-
-      - name: setup node @ ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/node_setup@main
 
       - name: setup
         run: yarn run setup:ci
@@ -135,8 +116,7 @@ jobs:
     needs: npm_test
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
 
       - name: docker compose build
         run: docker compose build
@@ -159,8 +139,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
 
       - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
         run: |
