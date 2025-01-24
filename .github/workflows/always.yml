@@ -67,6 +67,9 @@ jobs:
         run: yarn ${{ env.YARN_CLI_OPTS }} test
 
   npm_test:
+    needs:
+      - npm_test_projects
+      - yarn_test_projects
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
 
   yarn_test:
