@@ -37,8 +37,7 @@ jobs:
       - uses: percebus/github-actions-node/.github/actions/node_setup@main
 
       - name: ls
-        working-directory: ${{ env.WORKSPACE }}
-        run: ls -la
+        run: ls -la ${{ env.WORKSPACE }}
       - uses: percebus/github-actions-npm/.github/actions/npm_install@main
         with:
           working-directory: ${{ env.WORKSPACE }}
@@ -64,15 +63,16 @@ jobs:
       - uses: percebus/github-actions-node/.github/actions/node_setup@main
 
       - name: ls
-        working-directory: ${{ env.WORKSPACE }}
-        run: ls -la
+        run: ls -la ${{ env.WORKSPACE }}
 
       - name: setup
         run: yarn ${{ env.YARN_CLI_OPTS }} run setup:ci
       - name: yarn install
         run: yarn ${{ env.YARN_CLI_OPTS }} run yarn:ci
-      - name: ls node_modules
-        run: ls -la ${{ env.WORKSPACE }}/node_modules
+
+      # TODO? or XXX? Not generating node_modules
+      # - name: ls node_modules
+      #   run: ls -la ${{ env.WORKSPACE }}/node_modules
 
       - name: yarn test
         run: yarn ${{ env.YARN_CLI_OPTS }} test
