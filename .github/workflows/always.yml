@@ -21,7 +21,6 @@ permissions:
 
 jobs:
   npm_test_projects:
-    runs-on: ubuntu-latest
     strategy:
       max-parallel: 6
       fail-fast: false
@@ -37,19 +36,10 @@ jobs:
     #   working-directory: ./node/${{ matrix.project }}
     #   # Not all projects have `jest-junit`
     #   reporter: none
-
-    # XXX Use `workflows/npm_test` above
-    env:
-      WORKSPACE: ./node/${{ matrix.project }}
-    steps:
-      - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - uses: percebus/github-actions-node/.github/actions/node_setup@main
-      - uses: percebus/github-actions-npm/.github/actions/npm_install@main
-        with:
-          working-directory: ${{ env.WORKSPACE }}
-
-      - name: npm test
-        run: npm test --prefix ${{ env.WORKSPACE }}
+    uses: percebus/github-actions-npm/.github/workflows/npm_run_script.yml@main
+    with:
+      script: test
+      working-directory: ./node/${{ matrix.project }}
 
   yarn_test_projects:
     runs-on: ubuntu-latest
