@@ -42,10 +42,6 @@ jobs:
       working-directory: ./node/${{ matrix.project }}
 
   yarn_test_projects:
-    runs-on: ubuntu-latest
-    env:
-      WORKSPACE: ./node/package-c
-      YARN_CLI_OPTS: --cwd ./node/package-c
     strategy:
       max-parallel: 6
       fail-fast: false
@@ -53,25 +49,10 @@ jobs:
         project:
           - package-c
 
-    name: yarn test ${{ matrix.project }}
-    steps:
-      - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - uses: percebus/github-actions-node/.github/actions/node_setup@main
-
-      - name: ls
-        run: ls -la ${{ env.WORKSPACE }}
-
-      - name: setup
-        run: yarn ${{ env.YARN_CLI_OPTS }} run setup:ci
-      - name: yarn install
-        run: yarn ${{ env.YARN_CLI_OPTS }} run clean-install
-
-      # TODO? or XXX? Not generating node_modules
-      # - name: ls node_modules
-      #   run: ls -la ${{ env.WORKSPACE }}/node_modules
-
-      - name: yarn test
-        run: yarn ${{ env.YARN_CLI_OPTS }} test
+    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    with:
+      working-directory: ./node/${{ matrix.project }}
+      script: test
 
   npm_test:
     needs:
@@ -84,23 +65,12 @@ jobs:
 
   yarn_test:
     name: yarn test
-    runs-on: ubuntu-latest
     needs:
       - npm_test_projects
       - yarn_test_projects
-    steps:
-      - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - uses: percebus/github-actions-node/.github/actions/node_setup@main
-
-      - name: setup
-        run: yarn run setup:ci
-      - name: yarn install
-        run: yarn run yarn:ci
-      - name: ls node_modules
-        run: ls -la ./node_modules
-
-      - name: yarn test
-        run: yarn test
+    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    with:
+      script: test
 
   docker_compose:
     name: docker compose
