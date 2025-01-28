@@ -28,7 +28,7 @@ jobs:
         project:
           - express-app
           - rest-app
-    name: npm test ${{ matrix.project }}
+    name: "npm test: ${{ matrix.project }}"
 
     # FIXME
     # uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
@@ -41,39 +41,25 @@ jobs:
       script: test
       working-directory: ./node/${{ matrix.project }}
 
+  #
+  # yarn test matrix
   yarn_test_projects:
-    runs-on: ubuntu-latest
-    env:
-      WORKSPACE: ./node/package-c
-      YARN_CLI_OPTS: --cwd ./node/package-c
     strategy:
       max-parallel: 6
       fail-fast: false
       matrix:
         project:
           - package-c
+    name: "yarn test: ${{ matrix.project }}"
+    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    with:
+      working-directory: ./node/${{ matrix.project }}
+      script: test
 
-    name: yarn test ${{ matrix.project }}
-    steps:
-      - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - uses: percebus/github-actions-node/.github/actions/node_setup@main
-
-      - name: ls
-        run: ls -la ${{ env.WORKSPACE }}
-
-      - name: setup
-        run: yarn ${{ env.YARN_CLI_OPTS }} run setup:ci
-      - name: yarn install
-        run: yarn ${{ env.YARN_CLI_OPTS }} run clean-install
-
-      # TODO? or XXX? Not generating node_modules
-      # - name: ls node_modules
-      #   run: ls -la ${{ env.WORKSPACE }}/node_modules
-
-      - name: yarn test
-        run: yarn ${{ env.YARN_CLI_OPTS }} test
-
+  #
+  # npm test
   npm_test:
+    name: npm test
     needs:
       - npm_test_projects
       - yarn_test_projects
@@ -82,26 +68,19 @@ jobs:
       reporter: jest-junit
       files_pattern: ./node/*/junit.xml
 
+  #
+  # yarn test
   yarn_test:
     name: yarn test
-    runs-on: ubuntu-latest
     needs:
       - npm_test_projects
       - yarn_test_projects
-    steps:
-      - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - uses: percebus/github-actions-node/.github/actions/node_setup@main
+    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    with:
+      script: test
 
-      - name: setup
-        run: yarn run setup:ci
-      - name: yarn install
-        run: yarn run yarn:ci
-      - name: ls node_modules
-        run: ls -la ./node_modules
-
-      - name: yarn test
-        run: yarn test
-
+  #
+  # docker compose
   docker_compose:
     name: docker compose
     needs: npm_test
@@ -112,6 +91,8 @@ jobs:
       - name: docker compose build
         run: docker compose build
 
+  #
+  # docker build
   docker_build_matrix:
     name: docker build --target
     if: github.ref == 'refs/heads/main'
@@ -131,7 +112,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
-
       - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
         run: |
           docker build . \
