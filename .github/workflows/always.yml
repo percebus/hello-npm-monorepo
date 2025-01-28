@@ -28,7 +28,7 @@ jobs:
         project:
           - express-app
           - rest-app
-    name: npm test ${{ matrix.project }}
+    name: "${{ matrix.project }}: npm test"
 
     # FIXME
     # uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
@@ -49,6 +49,7 @@ jobs:
         project:
           - package-c
 
+    name: "${{ matrix.project }}: yarn test"
     uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
