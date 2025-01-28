@@ -41,6 +41,8 @@ jobs:
       script: test
       working-directory: ./node/${{ matrix.project }}
 
+  #
+  # yarn test matrix
   yarn_test_projects:
     strategy:
       max-parallel: 6
@@ -48,13 +50,14 @@ jobs:
       matrix:
         project:
           - package-c
-
     name: "${{ matrix.project }}: yarn test"
     uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
       script: test
 
+  #
+  # npm test
   npm_test:
     needs:
       - npm_test_projects
@@ -64,6 +67,8 @@ jobs:
       reporter: jest-junit
       files_pattern: ./node/*/junit.xml
 
+  #
+  # yarn test
   yarn_test:
     name: yarn test
     needs:
@@ -73,6 +78,8 @@ jobs:
     with:
       script: test
 
+  #
+  # docker compose
   docker_compose:
     name: docker compose
     needs: npm_test
@@ -83,6 +90,8 @@ jobs:
       - name: docker compose build
         run: docker compose build
 
+  #
+  # docker build
   docker_build_matrix:
     name: docker build --target
     if: github.ref == 'refs/heads/main'
@@ -102,7 +111,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
-
       - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
         run: |
           docker build . \
