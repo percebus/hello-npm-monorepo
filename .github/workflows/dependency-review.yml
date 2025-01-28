@@ -1,0 +1,20 @@
+name: Dependencies Review & Audit
+
+on:
+  # "This run was triggered by the "push" event, which is unsupported.
+  #  Please ensure you are using the "pull_request" event for this workflow."
+  pull_request:
+  workflow_call: # SRC: https://docs.github.com/en/actions/using-workflows/reusing-workflows
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    uses: percebus/github-actions-common/.github/workflows/dependency-review.yml@main
+
+  npm_audit:
+    uses: percebus/github-actions-npm/.github/workflows/npm_audit.yml@main
+
+  yarn_audit:
+    uses: percebus/github-actions-yarn/.github/workflows/yarn_audit.yml@main
