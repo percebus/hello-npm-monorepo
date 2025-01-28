@@ -59,6 +59,7 @@ jobs:
   #
   # npm test
   npm_test:
+    name: npm test
     needs:
       - npm_test_projects
       - yarn_test_projects
