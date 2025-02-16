@@ -4,20 +4,19 @@ on:
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 env:
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  IMAGE_TAG_SUFFIX: latest
 
   DOCKER_BUILDKIT: 1
-  DOCKER_TAG_VERSION: latest
 
-# SEE: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
-# "Invalid workflow file: .github/workflows/always.yml#L70
-# The workflow is requesting 'actions: read, checks: write, pull-requests: write',
-# but is only allowed 'actions: none, checks: none, pull-requests: none'.""
+# SEE:
+# - percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+# - percebus/github-actions-docker/.github/actions/docker_build_target.yml@main
 permissions:
   contents: read
   actions: read
   checks: write
   pull-requests: write
+  security-events: write
 
 jobs:
   npm_test_projects:
@@ -38,8 +37,8 @@ jobs:
     #   reporter: none
     uses: percebus/github-actions-npm/.github/workflows/npm_run_script.yml@main
     with:
-      script: test
       working-directory: ./node/${{ matrix.project }}
+      script: test
 
   #
   # yarn test matrix
@@ -95,13 +94,13 @@ jobs:
   # docker build
   docker_build_matrix:
     name: docker build --target
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main' # FIXME
     needs: docker_compose
     continue-on-error: true
     strategy:
       max-parallel: 10
       matrix:
-        DOCKER_TARGET:
+        target:
           - root
           #
           # These are tested by docker compose
@@ -112,8 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
-        run: |
-          docker build . \
-            --target ${{ matrix.DOCKER_TARGET }} \
-            --tag ${{ env.REPOSITORY_NAME }}.${{ matrix.DOCKER_TARGET }}:${{ env.DOCKER_TAG_VERSION }}
+
+      - uses: percebus/github-actions-docker/.github/actions/docker_build_target@main
+        with:
+          target: ${{ matrix.target }}
+          image_tag_suffix: ${{ env.IMAGE_TAG_SUFFIX }}
