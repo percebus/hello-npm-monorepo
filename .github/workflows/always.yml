@@ -100,7 +100,7 @@ jobs:
     strategy:
       max-parallel: 10
       matrix:
-        DOCKER_TARGET:
+        target:
           - root
           #
           # These are tested by docker compose
@@ -114,6 +114,5 @@ jobs:
 
       - uses: percebus/github-actions-docker/.github/actions/docker_build_target@main
         with:
-          dockerfile: Dockerfile
           target: ${{ matrix.target }}
           image_tag_suffix: ${{ env.IMAGE_TAG_SUFFIX }}
