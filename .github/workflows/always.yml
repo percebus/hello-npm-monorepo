@@ -94,7 +94,7 @@ jobs:
   # docker build
   docker_build_matrix:
     name: docker build --target
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main' # FIXME
     needs: docker_compose
     continue-on-error: true
     strategy:
