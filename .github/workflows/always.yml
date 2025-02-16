@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 env:
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  IMAGE_TAG_SUFFIX: latest
 
   DOCKER_BUILDKIT: 1
   DOCKER_TAG_VERSION: latest
@@ -112,8 +112,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
-      - name: "docker build: ${{ matrix.DOCKER_TARGET }}"
-        run: |
-          docker build . \
-            --target ${{ matrix.DOCKER_TARGET }} \
-            --tag ${{ env.REPOSITORY_NAME }}.${{ matrix.DOCKER_TARGET }}:${{ env.DOCKER_TAG_VERSION }}
+
+      - uses: percebus/github-actions-docker/.github/actions/docker_build_target@main
+        with:
+          dockerfile: Dockerfile
+          target: ${{ matrix.target }}
+          image_tag_suffix: ${{ env.IMAGE_TAG_SUFFIX }}
