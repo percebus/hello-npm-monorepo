@@ -7,7 +7,6 @@ env:
   IMAGE_TAG_SUFFIX: latest
 
   DOCKER_BUILDKIT: 1
-  DOCKER_TAG_VERSION: latest
 
 # SEE: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
 # "Invalid workflow file: .github/workflows/always.yml#L70
