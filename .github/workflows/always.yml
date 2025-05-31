@@ -50,7 +50,7 @@ jobs:
         project:
           - package-c
     name: "yarn test: ${{ matrix.project }}"
-    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    uses: percebus/github-actions-yarn/.github/workflows/run_script.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
       script: test
@@ -61,7 +61,7 @@ jobs:
     name: npm test
     needs:
       - npm_test_projects
-      - yarn_test_projects
+      - test_projects
     uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
     with:
       reporter: jest-junit
@@ -74,7 +74,7 @@ jobs:
     needs:
       - npm_test_projects
       - yarn_test_projects
-    uses: percebus/github-actions-yarn/.github/workflows/yarn_run_script.yml@main
+    uses: percebus/github-actions-yarn/.github/workflows/run_script.yml@main
     with:
       script: test
 
