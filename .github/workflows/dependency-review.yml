@@ -18,9 +18,9 @@ jobs:
     uses: percebus/github-actions-common/.github/workflows/dependency-review.yml@main
 
   npm_audit:
-    name: audit w/ npm
+    name: audit
     uses: percebus/github-actions-npm/.github/workflows/npm_audit.yml@main
 
   yarn_audit:
-    name: audit w/ yarn
+    name: audit
     uses: percebus/github-actions-yarn/.github/workflows/audit.yml@main
