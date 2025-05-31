@@ -6,6 +6,10 @@ on:
   pull_request:
   workflow_call: # SRC: https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -14,9 +18,9 @@ jobs:
     uses: percebus/github-actions-common/.github/workflows/dependency-review.yml@main
 
   npm_audit:
-    name: audit w/ npm
+    name: audit
     uses: percebus/github-actions-npm/.github/workflows/npm_audit.yml@main
 
   yarn_audit:
-    name: audit w/ yarn
-    uses: percebus/github-actions-yarn/.github/workflows/yarn_audit.yml@main
+    name: audit
+    uses: percebus/github-actions-yarn/.github/workflows/audit.yml@main
