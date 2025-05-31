@@ -19,4 +19,4 @@ jobs:
 
   yarn_audit:
     name: audit w/ yarn
-    uses: percebus/github-actions-yarn/.github/workflows/yarn_audit.yml@main
+    uses: percebus/github-actions-yarn/.github/workflows/audit.yml@main
