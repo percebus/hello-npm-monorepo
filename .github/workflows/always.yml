@@ -31,7 +31,7 @@ jobs:
         project:
           - express-app
           - rest-app
-    name: "npm test: ${{ matrix.project }}"
+    name: ${{ matrix.project }}
 
     # FIXME
     # uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
@@ -53,7 +53,7 @@ jobs:
       matrix:
         project:
           - package-c
-    name: "yarn test: ${{ matrix.project }}"
+    name: ${{ matrix.project }}
     uses: percebus/github-actions-yarn/.github/workflows/run_script.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
@@ -62,7 +62,7 @@ jobs:
   #
   # npm test
   npm_test:
-    name: npm test
+    name: parent
     needs:
       - npm_test_projects
       - yarn_test_projects
@@ -74,7 +74,7 @@ jobs:
   #
   # yarn test
   yarn_test:
-    name: yarn test
+    name: parent
     needs:
       - npm_test_projects
       - yarn_test_projects
