@@ -13,7 +13,7 @@ env:
   DOCKER_BUILDKIT: 1
 
 # SEE:
-# - percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+# - percebus/github-actions-npm/.github/workflows/test.yml@main
 # - percebus/github-actions-docker/.github/actions/docker_build_target.yml@main
 permissions:
   contents: read
@@ -34,12 +34,12 @@ jobs:
     name: ${{ matrix.project }}
 
     # FIXME
-    # uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+    # uses: percebus/github-actions-npm/.github/workflows/test.yml@main
     # with:
     #   working-directory: ./node/${{ matrix.project }}
     #   # Not all projects have `jest-junit`
     #   reporter: none
-    uses: percebus/github-actions-npm/.github/workflows/npm_run_script.yml@main
+    uses: percebus/github-actions-npm/.github/workflows/run_script.yml@main
     with:
       working-directory: ./node/${{ matrix.project }}
       script: test
@@ -66,7 +66,7 @@ jobs:
     needs:
       - npm_test_projects
       - yarn_test_projects
-    uses: percebus/github-actions-npm/.github/workflows/npm_test.yml@main
+    uses: percebus/github-actions-npm/.github/workflows/test.yml@main
     with:
       reporter: jest-junit
       files_pattern: ./node/*/junit.xml

@@ -4,7 +4,6 @@ on:
   # "This run was triggered by the "push" event, which is unsupported.
   #  Please ensure you are using the "pull_request" event for this workflow."
   pull_request:
-  workflow_call: # SRC: https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -12,6 +11,7 @@ concurrency:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   dependency-review:
@@ -19,7 +19,7 @@ jobs:
 
   npm_audit:
     name: audit
-    uses: percebus/github-actions-npm/.github/workflows/npm_audit.yml@main
+    uses: percebus/github-actions-npm/.github/workflows/audit.yml@main
 
   yarn_audit:
     name: audit
