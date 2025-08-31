@@ -15,12 +15,4 @@ permissions:
 
 jobs:
   dependency-review:
-    uses: percebus/github-actions-common/.github/workflows/dependency-review.yml@main
-
-  npm_audit:
-    name: audit
-    uses: percebus/github-actions-npm/.github/workflows/audit.yml@main
-
-  yarn_audit:
-    name: audit
-    uses: percebus/github-actions-yarn/.github/workflows/audit.yml@main
+    uses: percebus/github-actions-npm/.github/workflows/dependency-review.yml@main
