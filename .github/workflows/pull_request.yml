@@ -1,4 +1,4 @@
-name: Dependencies Review & Audit
+name: Pull Request
 
 on:
   # "This run was triggered by the "push" event, which is unsupported.
@@ -11,11 +11,13 @@ concurrency:
 
 permissions:
   contents: read
-  pull-requests: read
 
 jobs:
   dependency-review:
-    uses: percebus/github-actions-common/.github/workflows/dependency-review.yml@main
+    uses: percebus/github-actions-compliance/.github/workflows/dependency-review.yml@main
+    permissions:
+      contents: read
+      pull-requests: read
 
   npm_audit:
     name: audit

@@ -1,4 +1,5 @@
 name: "[C]ontinuous [I]ntegration"
+
 on:
   push:
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
@@ -23,7 +24,7 @@ permissions:
   security-events: write
 
 jobs:
-  npm_test_projects:
+  npm_test__matrix:
     strategy:
       max-parallel: 6
       fail-fast: false
@@ -46,7 +47,7 @@ jobs:
 
   #
   # yarn test matrix
-  yarn_test_projects:
+  yarn_test__matrix:
     strategy:
       max-parallel: 6
       fail-fast: false
@@ -64,8 +65,8 @@ jobs:
   npm_test:
     name: parent
     needs:
-      - npm_test_projects
-      - yarn_test_projects
+      - npm_test__matrix
+      - yarn_test__matrix
     uses: percebus/github-actions-npm/.github/workflows/test.yml@main
     with:
       reporter: jest-junit
@@ -76,8 +77,8 @@ jobs:
   yarn_test:
     name: parent
     needs:
-      - npm_test_projects
-      - yarn_test_projects
+      - npm_test__matrix
+      - yarn_test__matrix
     uses: percebus/github-actions-yarn/.github/workflows/run_script.yml@main
     with:
       script: test
@@ -96,7 +97,7 @@ jobs:
 
   #
   # docker build
-  docker_build_matrix:
+  docker_build__matrix:
     name: docker build --target
     # if: github.ref == 'refs/heads/main' # FIXME
     needs: docker_compose
@@ -116,7 +117,7 @@ jobs:
     steps:
       - uses: percebus/github-actions-common/.github/actions/checkout@main
 
-      - uses: percebus/github-actions-docker/.github/actions/docker_build_target@main
+      - uses: percebus/github-actions-docker/.github/actions/build@main
         with:
           target: ${{ matrix.target }}
           image_tag_suffix: ${{ env.IMAGE_TAG_SUFFIX }}
