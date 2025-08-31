@@ -15,7 +15,7 @@ env:
 
 # SEE:
 # - percebus/github-actions-npm/.github/workflows/test.yml@main
-# - percebus/github-actions-docker/.github/actions/docker_build_target.yml@main
+# - percebus/github-actions-docker/.github/actions/build.yml@main
 permissions:
   contents: read
   actions: read
