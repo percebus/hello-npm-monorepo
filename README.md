@@ -1,10 +1,10 @@
 # hello-npm-monorepo
 
-[`HISTORY`](HISTORY.md) | [`TODO`s](TODO.md) | [`LICENSE`](LICENSE)
-
 [![[C]ontinuous [I]ntegration](https://github.com/percebus/hello-npm-monorepo/actions/workflows/always.yml/badge.svg)](https://github.com/percebus/hello-npm-monorepo/actions/workflows/always.yml) [![Dependencies Review & Audit](https://github.com/percebus/hello-npm-monorepo/actions/workflows/pull_request.yml/badge.svg?event=pull_request)](https://github.com/percebus/hello-npm-monorepo/actions/workflows/pull_request.yml)
 
-npm, multiple projects
+[`LICENSE`](LICENSE) | [`HISTORY`](HISTORY.md) | [`TODO`s](TODO.md)
+
+A `package.json` mono-repo, with multiple `npm` and/or `yarn` packages.
 
 ## Resources
 
