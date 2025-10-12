@@ -1,0 +1,23 @@
+{
+  "name": "parcel-vanilla-starter",
+  "private": true,
+  "version": "0.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "npm:install:global": "npm install --location=global pnpm",
+    "setup": "pnpm npm:install:global",
+    "setup:ci": "pnpm setup",
+    "setup:docker": "pnpm setup",
+    "echo": "echo 'my-parcel-app'",
+    "start": "parcel",
+    "build": "parcel build",
+    "pretest": "pnpm echo",
+    "test": "pnpm build"
+  },
+  "author": "JCystems",
+  "license": "SEE LICENSE IN ../../LICENSE.md",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel": "^2.14.0"
+  }
+}

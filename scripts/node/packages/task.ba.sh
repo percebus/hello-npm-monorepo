@@ -13,6 +13,7 @@ set -x
 npm run sub:express-app:${cmd}
 npm run sub:rest-app:${cmd}
 npm run sub:package-c:${cmd}
+npm run sub:my-parcel-app:${cmd}
 
 set +x
 set +e

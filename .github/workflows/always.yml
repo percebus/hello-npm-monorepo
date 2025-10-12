@@ -60,6 +60,34 @@ jobs:
       working-directory: ./node/${{ matrix.project }}
       script: test
 
+
+  #
+  # pnpm test matrix
+  pnpm_test__matrix:
+    strategy:
+      max-parallel: 6
+      fail-fast: false
+      matrix:
+        project:
+          - my-parcel-app
+    name: ${{ matrix.project }}
+    # uses: percebus/github-actions-pnpm/.github/workflows/run_script.yml@main # TODO
+    runs-on: ubuntu-latest
+    steps:
+      - uses: percebus/github-actions-common/.github/actions/checkout@main
+      - uses: percebus/github-actions-node/.github/actions/setup@main
+
+      # TODO create `github-actions-pnpm` repo
+      - name: pnpm setup
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          run_install: true
+
+      - name: pnpm test
+        run: pnpm test
+        working-directory: ./node/${{ matrix.project }}
+
   #
   # npm test
   npm_test:
@@ -67,6 +95,7 @@ jobs:
     needs:
       - npm_test__matrix
       - yarn_test__matrix
+      - pnpm_test__matrix
     uses: percebus/github-actions-npm/.github/workflows/test.yml@main
     with:
       reporter: jest-junit
