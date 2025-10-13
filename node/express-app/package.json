@@ -4,9 +4,9 @@
   "description": "Some express JS app",
   "main": "src/app.js",
   "scripts": {
-    "prettier": "prettier .",
-    "prettier:write": "npm run prettier -- --write",
-    "prettier:check": "npm run prettier -- --check",
+    "_prettier": "prettier .",
+    "prettier:write": "npm run _prettier -- --write",
+    "prettier:check": "npm run _prettier -- --check",
     "lint": "npm run prettier:check",
     "style": "npm run prettier:write",
     "poststyle": "npm run lint",

@@ -14,3 +14,11 @@ services:
     command: start
     ports:
       - 8081:3000
+
+  my-parcel-app:
+    build:
+      context: .
+      target: my-parcel-app
+    command: start
+    ports:
+      - 8082:1234
