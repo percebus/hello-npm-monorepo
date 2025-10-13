@@ -141,6 +141,8 @@ jobs:
           # These are tested by docker compose
           - express-app
           - rest-app
+          - package-c
+          - my-parcel-app
           # TODO add each package
 
     runs-on: ubuntu-latest
