@@ -7,8 +7,13 @@ ENTRYPOINT [ "npm", "run" ]
 FROM base AS yarn
 ENTRYPOINT [ "yarn", "run" ]
 
+# SRC: https://pnpm.io/docker
 FROM base as pnpm
-ENTRYPOINT [ "pnpm" ]
+ENV CI="true"
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+ENTRYPOINT [ "pnpm", "run" ]
 
 
 FROM npm AS root
@@ -37,5 +42,6 @@ FROM pnpm AS my-parcel-app
 WORKDIR /usr/project
 COPY ./node/my-parcel-app .
 RUN ls -la
-RUN npm run setup:docker --if-present && pnpm install
+RUN npm run setup:docker --if-present
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 CMD [ "test" ]

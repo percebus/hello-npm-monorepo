@@ -64,6 +64,8 @@ jobs:
   #
   # pnpm test matrix
   pnpm_test__matrix:
+    env:
+      CI: "true"
     strategy:
       max-parallel: 6
       fail-fast: false

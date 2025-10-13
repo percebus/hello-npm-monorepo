@@ -5,14 +5,14 @@
   "source": "src/index.html",
   "scripts": {
     "npm:install:global": "npm install --location=global pnpm",
-    "setup": "pnpm npm:install:global",
-    "setup:ci": "pnpm setup",
-    "setup:docker": "pnpm setup",
+    "setup": "npm run npm:install:global",
+    "setup:ci": "npm run setup",
+    "setup:docker": "exit 0",
     "echo": "echo 'my-parcel-app'",
     "start": "parcel",
     "build": "parcel build",
     "pretest": "pnpm echo",
-    "test": "pnpm build"
+    "test": "pnpm run build"
   },
   "author": "JCystems",
   "license": "SEE LICENSE IN ../../LICENSE.md",
