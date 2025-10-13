@@ -109,6 +109,7 @@ jobs:
     needs:
       - npm_test__matrix
       - yarn_test__matrix
+      - pnpm_test__matrix
     uses: percebus/github-actions-yarn/.github/workflows/run_script.yml@main
     with:
       script: test
@@ -141,7 +142,7 @@ jobs:
           # These are tested by docker compose
           - express-app
           - rest-app
-          - package-c
+          # - package-c
           - my-parcel-app
           # TODO add each package
 
@@ -152,4 +153,5 @@ jobs:
       - uses: percebus/github-actions-docker/.github/actions/build@main
         with:
           target: ${{ matrix.target }}
+          scan-image: ${{ github.ref == 'refs/heads/main' }}
           image_tag_suffix: ${{ env.IMAGE_TAG_SUFFIX }}
