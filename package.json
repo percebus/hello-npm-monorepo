@@ -7,7 +7,7 @@
   ],
   "private": true,
   "scripts": {
-    "npm:install:global:all": "npm install --location global yarn",
+    "npm:install:global:all": "npm install --location global yarn pnpm",
     "setup": "npm run npm:install:global:all",
     "setup:ci": "npm run setup",
     "setup:docker": "exit 0",
