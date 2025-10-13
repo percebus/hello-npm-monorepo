@@ -60,7 +60,6 @@ jobs:
       working-directory: ./node/${{ matrix.project }}
       script: test
 
-
   #
   # pnpm test matrix
   pnpm_test__matrix:

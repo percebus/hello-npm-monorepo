@@ -9,11 +9,10 @@ fi
 
 set -x
 
-# TODO for each package
-npm run sub:express-app:${cmd}
-npm run sub:rest-app:${cmd}
-npm run sub:package-c:${cmd}
-npm run sub:my-parcel-app:${cmd}
+shopt -s nullglob
+for dir in ./node/*/; do
+  npm --prefix ${dir} run ${cmd}
+done
 
 set +x
 set +e
